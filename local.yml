@@ -4,17 +4,26 @@
     - name: update repositories
       apt: update_cache=yes
       changed_when: False
-    - name: include vars
-      include_vars:
-        file: variables.yml
+    - name: Store current username
+      command: whoami
+      register: whoami
+      become: no
+    - set_fact:
+        username: "{{ whoami.stdout_lines[0] }}"
+    - debug: var=username
 
   tasks:
     - include: tasks/users.yml
     - include: tasks/packages.yml
     - include: tasks/dotfiles.yml
+      become: no
     - include: tasks/oh_my_zsh.yml
     - include: tasks/check_docker_installation.yml
     - include: tasks/docker.yml
+      become: yes
       when: docker_installed is failed
     - include: tasks/doom_emacs.yml
     - include: tasks/fonts.yml
+      become: no
+    - include: tasks/asdf.yml
+      become: no

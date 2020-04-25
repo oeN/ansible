@@ -8,3 +8,4 @@ DOCKER_PACKAGES:
   - gnupg-agent
   - software-properties-common
 USER: "{{ username }}"
+ASDF_VERSION: "0.7.8"

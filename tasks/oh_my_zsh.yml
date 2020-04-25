@@ -5,18 +5,18 @@
       - curl
   become: yes
 
+- name: Return to the current user
+  command: whoami
+  become: no
+
 - name: Check if oh my zsh is installed
-  command: "[ -d /home/{{ username}}/.oh-my-zsh ]"
+  command: "[ -d ~/.oh-my-zsh ]"
   register: oh_my_zsh_installed
   ignore_errors: True
-  become: yes
-  become_user: "{{ username }}"
 
 - name: Install oh my zsh 
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   when: oh_my_zsh_installed is failed
-  become: yes
-  become_user: "{{ username }}"
 
 - name: Change shell to the given user
   user:

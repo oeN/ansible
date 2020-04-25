@@ -1,20 +1,25 @@
+- name: Check if Jetbrians is installed
+  command: fc-list | grep JetBrainsMono
+  register: jetbrains_installed
+
 - name: Download Jetbrains Mono
   get_url:
     url: https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip
     dest: /tmp/jetbrains-mono.zip
-  become: no
+  when: jetbrains_installed is failed
 
 - name: Create .fonts dir
   file:
     path: ~/.fonts
     state: directory
-  become: no
+  when: jetbrains_installed is failed
 
 - name: Extract fonts
   unarchive:
     src: /tmp/jetbrains-mono.zip
     dest: ~/.fonts
-  become: no
+  when: jetbrains_installed is failed
 
 - name: Update font cache
   command: fc-cache -f -v
+  when: jetbrains_installed is failed
