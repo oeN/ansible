@@ -13,3 +13,8 @@
     - include: tasks/packages.yml
     - include: tasks/dotfiles.yml
     - include: tasks/oh_my_zsh.yml
+    - include: tasks/check_docker_installation.yml
+    - include: tasks/docker.yml
+      when: docker_installed is failed
+    - include: tasks/doom_emacs.yml
+    - include: tasks/fonts.yml

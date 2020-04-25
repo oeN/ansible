@@ -1,0 +1,20 @@
+- name: Download Jetbrains Mono
+  get_url:
+    url: https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip
+    dest: /tmp/jetbrains-mono.zip
+  become: no
+
+- name: Create .fonts dir
+  file:
+    path: ~/.fonts
+    state: directory
+  become: no
+
+- name: Extract fonts
+  unarchive:
+    src: /tmp/jetbrains-mono.zip
+    dest: ~/.fonts
+  become: no
+
+- name: Update font cache
+  command: fc-cache -f -v

@@ -1,0 +1,31 @@
+- name: Doom emacs required packages
+  become: yes
+  apt: 
+    name:
+      - emacs
+      - ripgrep
+
+- name: Clone Doom Emacs repo 
+  git:
+    repo: 'https://github.com/hlissner/doom-emacs'
+    dest: /home/{{ username }}/.emacs.d
+  become: no
+
+- name: Check if is already installed
+  command: "[ -d /home/{{ username }}/.doom.d ]"
+  register: doom_emacs_installed
+  ignore_errors: True
+  become: yes
+  become_user: "{{ username }}"
+
+- name: Run Doom Emacs Installation
+  command: "/home/{{ username }}/.emacs.d/bin/doom install" 
+  when: doom_emacs_installed is failed
+  become: yes
+  become_user: "{{ username }}"
+
+- name: Sync Doom Emacs
+  command: "~/.emacs.d/bin/doom sync"
+  when: doom_emacs_installed is succeeded
+  become: yes
+  become_user: "{{ username }}"

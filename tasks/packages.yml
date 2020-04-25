@@ -10,3 +10,5 @@
       - peek
       - slack
       - telegram-desktop
+      - fzf
+      - obs-studio
