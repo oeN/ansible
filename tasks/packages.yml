@@ -2,13 +2,25 @@
   become: yes
   apt: 
     name:
+      - vim
       - htop
       - snapd
       - tmux
       - zsh
       - alacritty
       - peek
-      - slack
+      - slack-desktop
       - telegram-desktop
-      - fzf
       - obs-studio
+      - cmake
+      - libssl-dev
+      - zlib1g-dev
+      - vlc
+      - spotify-client
+- name: Install snaps
+  snap:
+    name:
+      - yubioath-desktop
+      - code
+      - insomnia
+      - discord

@@ -1,5 +1,9 @@
+- command: test -d ~/.dotfiles
+  register: dotfiles_installed
+
 - git:
     repo: 'git@github.com:oeN/dotfiles.git'
     dest: ~/.dotfiles
     version: master
     accept_hostkey: yes
+  when: dotfiles_installed is failed

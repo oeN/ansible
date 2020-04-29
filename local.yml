@@ -27,3 +27,5 @@
       become: no
     - include: tasks/asdf.yml
       become: no
+    - include: tasks/fzf.yml
+      become: no
