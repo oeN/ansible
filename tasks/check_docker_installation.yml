@@ -1,2 +1,3 @@
 - command: docker --version
   register: docker_installed
+  ignore_errors: true

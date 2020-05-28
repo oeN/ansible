@@ -1,5 +1,7 @@
-- command: test -d ~/.dotfiles
+- name: Check if dotfiles is installed
+  command: "[ -d ~/.dotfiles ]"
   register: dotfiles_installed
+  ignore_errors: True
 
 - git:
     repo: 'git@github.com:oeN/dotfiles.git'

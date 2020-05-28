@@ -7,16 +7,13 @@
       - snapd
       - tmux
       - zsh
-      - alacritty
       - peek
-      - slack-desktop
-      - telegram-desktop
       - obs-studio
       - cmake
       - libssl-dev
       - zlib1g-dev
       - vlc
-      - spotify-client
+
 - name: Install snaps
   snap:
     name:
@@ -24,3 +21,13 @@
       - code
       - insomnia
       - discord
+      - telegram-desktop
+      - spotify
+
+- name: Install snaps classic
+  snap:
+    classic: true
+    name:
+      - slack
+      - code
+      - alacritty

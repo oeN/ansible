@@ -1,8 +1,16 @@
+- name: Check if .fzf is installed
+  command: "fzf"
+  register: fzf_installed
+  ignore_errors: True
+
 - git:
     repo: 'https://github.com/junegunn/fzf.git'
     dest: ~/.fzf
     depth: 1
     version: master
+    accept_hostkey: true
+  when: fzf_installed is failed
 
 - name: Install fzf
-  command: ~/.fzf/install
+  command: ~/.fzf/install --bin # just the bin, take care of the rest in the .dotfiles
+  when: fzf_installed is failed
