@@ -1,5 +1,23 @@
 - hosts: work_machines
   become: true
+  roles:
+    - role: gantsign.antigen
+      users:
+        - username: diomedet
+          antigen_libraries:
+            - name: oh-my-zsh
+          antigen_theme:
+            name: agnoster
+          antigen_bundles:
+            # Bundles from the default repo (robbyrussell's oh-my-zsh).
+            - name: git
+            - name: pip
+            - name: command-not-found
+            # Syntax highlighting bundle.
+            - name: zsh-syntax-highlighting 
+              url: zsh-users/zsh-syntax-highlighting
+    - role: ericsysmin.docker.docker
+
   pre_tasks:
     - name: update repositories
       apt: update_cache=yes
@@ -17,11 +35,6 @@
     - include: tasks/packages.yml
     - include: tasks/dotfiles.yml
       become: no
-    - include: tasks/oh_my_zsh.yml
-    - include: tasks/check_docker_installation.yml
-    - include: tasks/docker.yml
-      become: yes
-      when: docker_installed is failed
     - include: tasks/doom_emacs.yml
     - include: tasks/fonts.yml
       become: no
