@@ -1,22 +1,5 @@
 - hosts: work_machines
   become: true
-  roles:
-    - role: gantsign.antigen
-      users:
-        - username: diomedet
-          antigen_libraries:
-            - name: oh-my-zsh
-          antigen_theme:
-            name: agnoster
-          antigen_bundles:
-            # Bundles from the default repo (robbyrussell's oh-my-zsh).
-            - name: git
-            - name: pip
-            - name: command-not-found
-            # Syntax highlighting bundle.
-            - name: zsh-syntax-highlighting 
-              url: zsh-users/zsh-syntax-highlighting
-    - role: ericsysmin.docker.docker
 
   pre_tasks:
     - name: update repositories
@@ -30,15 +13,15 @@
         username: "{{ whoami.stdout_lines[0] }}"
     - debug: var=username
 
-  tasks:
-    - include: tasks/users.yml
-    - include: tasks/packages.yml
-    - include: tasks/dotfiles.yml
+  roles:
+    - role: ericsysmin.docker.docker
+    - role: packages
+    - role: ansible
+    - role: oh_my_zsh
+    - role: dotfiles
       become: no
-    - include: tasks/doom_emacs.yml
-    - include: tasks/fonts.yml
-      become: no
-    - include: tasks/asdf.yml
-      become: no
-    - include: tasks/fzf.yml
+    - role: doom_emacs
+    - role: fonts
+    - role: asdf
+    - role: fzf
       become: no

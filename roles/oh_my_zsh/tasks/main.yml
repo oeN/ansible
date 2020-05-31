@@ -1,0 +1,9 @@
+- name: Check if zsh is installed
+  command: test -d ~/.oh-my-zsh
+  ignore_errors: true
+  become: no
+  register: oh_my_zsh_installed
+
+- name: Install oh my zsh
+  command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when: oh_my_zsh_installed is failed

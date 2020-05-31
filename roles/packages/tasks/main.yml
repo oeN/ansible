@@ -1,0 +1,51 @@
+- name: Install packages
+  become: yes
+  apt: 
+    name:
+      - vim
+      - htop
+      - snapd
+      - tmux
+      - peek
+      - obs-studio
+      - cmake
+      - libssl-dev
+      - zlib1g-dev
+      - vlc
+
+- name: "ensure Google linux signing key present"
+  apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+
+- name: "ensure Google chrome repo present"
+  apt_repository:
+    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+    filename: "google-chrome"
+    state: present
+    update_cache: yes
+
+- name: "ensure Google chrome present"
+  apt:
+    name: google-chrome-stable
+    state: present
+
+- name: Install snaps
+  snap:
+    name:
+      - yubioath-desktop
+      - code
+      - insomnia
+      - discord
+      - telegram-desktop
+      - spotify
+
+- name: Install snaps classic
+  snap:
+    classic: true
+    name:
+      - slack
+      - code
+      - alacritty
+
+- name: Install VSCode extension
+  command: /snap/bin/code --install-extension Shan.code-settings-sync
+  become: no

@@ -9,3 +9,14 @@
     version: master
     accept_hostkey: yes
   when: dotfiles_installed is failed
+
+- name: For now remove the current .zshrc file
+  file:
+    path: ~/.zshrc
+    state: absent
+
+- name: Create .zshrc link
+  file:
+    src: ~/.dotfiles/.zshrc
+    dest: ~/.zshrc
+    state: link
